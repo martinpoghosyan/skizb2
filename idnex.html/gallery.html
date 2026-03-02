@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Photo gallery of all cocktails at The Velvet Glass — classics, signature drinks, mocktails and shots." />
+  <title>Gallery — The Velvet Glass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0d0f;
+      --surface:   #161618;
+      --border:    rgba(255,255,255,0.08);
+      --gold:      #d4af37;
+      --gold-light:#f0c040;
+      --text:      #e8e0d0;
+      --muted:     rgba(232,224,208,0.55);
+      --radius:    14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.8rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--gold); }
+
+    /* ── Language Switcher ── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+    .lang-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 5px 11px;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+      line-height: 1;
+    }
+    .lang-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #1a1a1a;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.4);
+    }
+    .lang-btn:not(.active):hover { color: rgba(255,255,255,0.85); }
+
+    /* ── Hero Banner ── */
+    .gallery-hero {
+      padding: 4rem 2rem 2.5rem;
+      text-align: center;
+    }
+    .gallery-hero .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+    }
+    .gallery-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0.7rem;
+    }
+    .gallery-hero h1 em { font-style: italic; color: var(--gold); }
+    .gallery-hero p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Filter Pills ── */
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      padding: 0 2rem 2.5rem;
+    }
+    .filter-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.22s;
+    }
+    .filter-btn:hover { border-color: rgba(255,255,255,0.22); color: var(--text); }
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-color: transparent;
+      color: #1a1a1a;
+      box-shadow: 0 3px 12px rgba(212,175,55,0.35);
+    }
+
+    /* ── Masonry Grid ── */
+    .gallery-grid {
+      columns: 4 240px;
+      column-gap: 1rem;
+      padding: 0 2rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: transform 0.28s cubic-bezier(.22,.68,0,1.2),
+                  box-shadow 0.28s;
+    }
+    .gallery-item:hover {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(212,175,55,0.25);
+    }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.2rem 1rem 0.9rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 100%);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.28s, transform 0.28s;
+    }
+    .gallery-item:hover .caption { opacity: 1; transform: translateY(0); }
+    .caption-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      display: block;
+    }
+    .caption-cat {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      animation: lbFadeIn 0.22s ease;
+    }
+    .lightbox.open { display: flex; }
+    @keyframes lbFadeIn { from { opacity:0; } to { opacity:1; } }
+
+    .lb-inner {
+      position: relative;
+      max-width: 820px;
+      width: 100%;
+      animation: lbSlideUp 0.28s cubic-bezier(.22,.68,0,1.1);
+    }
+    @keyframes lbSlideUp {
+      from { opacity:0; transform: translateY(30px) scale(0.96); }
+      to   { opacity:1; transform: translateY(0)   scale(1); }
+    }
+    .lb-img {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+      max-height: 80vh;
+      object-fit: cover;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+    }
+    .lb-info {
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+    .lb-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .lb-cat {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 0.3rem;
+    }
+    .lb-close {
+      position: absolute;
+      top: -14px; right: -14px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      line-height: 1;
+    }
+    .lb-close:hover { background: #2a2a2e; transform: scale(1.1) rotate(90deg); }
+
+    .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: rgba(22,22,24,0.85);
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .lb-nav:hover { background: var(--surface); transform: translateY(-50%) scale(1.1); }
+    .lb-prev { left: -56px; }
+    .lb-next { right: -56px; }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      padding: 0 2rem 0.5rem;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── Hidden items ── */
+    .gallery-item.hidden { display: none; }
+
+    @media (max-width: 600px) {
+      .lb-prev { left: -10px; }
+      .lb-next { right: -10px; }
+      .gallery-grid { padding: 0 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="cocktails.html" class="nav-logo">The Velvet Glass</a>
+    <ul class="nav-links">
+      <li><a href="cocktails.html#classics"   data-i18n="nav-classics">Classics</a></li>
+      <li><a href="cocktails.html#signature"  data-i18n="nav-signature">Signature</a></li>
+      <li><a href="cocktails.html#mocktails"  data-i18n="nav-mocktails">Mocktails</a></li>
+      <li><a href="cocktails.html#shots"      data-i18n="nav-shots">Shots</a></li>
+      <li><a href="gallery.html" class="active" data-i18n="nav-gallery">Gallery</a></li>
+    </ul>
+    <div class="lang-switcher" role="group" aria-label="Language switcher">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn"        id="btn-hy" onclick="setLang('hy')">ՀՅ</button>
+      <button class="lang-btn"        id="btn-ru" onclick="setLang('ru')">RU</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="gallery-hero">
+    <span class="tag" data-i18n="gallery-tag">Visual Menu</span>
+    <h1><em data-i18n="gallery-title-em">Every Pour</em>, <span data-i18n="gallery-title-rest">A Masterpiece</span></h1>
+    <p data-i18n="gallery-subtitle">Browse the full collection of our hand-crafted drinks — click any photo to explore.</p>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all"       onclick="filterGallery('all',       this)" data-i18n-filter="filter-all">All</button>
+    <button class="filter-btn"        data-filter="classics"  onclick="filterGallery('classics',  this)" data-i18n-filter="filter-classics">Classics</button>
+    <button class="filter-btn"        data-filter="signature" onclick="filterGallery('signature', this)" data-i18n-filter="filter-signature">Signature</button>
+    <button class="filter-btn"        data-filter="mocktails" onclick="filterGallery('mocktails', this)" data-i18n-filter="filter-mocktails">Mocktails</button>
+    <button class="filter-btn"        data-filter="shots"     onclick="filterGallery('shots',     this)" data-i18n-filter="filter-shots">Shots</button>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div class="gallery-grid" id="gallery-grid">
+
+    <!-- CLASSICS -->
+    <div class="gallery-item" data-cat="classics" data-index="0" onclick="openLightbox(0)">
+      <img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=85" alt="Old Fashioned" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-old-fashioned">Old Fashioned</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="classics" data-index="1" onclick="openLightbox(1)">
+      <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=800&q=85" alt="Negroni" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-negroni">Negroni</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="classics" data-index="2" onclick="openLightbox(2)">
+      <img src="https://images.unsplash.com/photo-1607622750671-6cd9a99eabd1?w=800&q=85" alt="Dry Martini" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-martini">Dry Martini</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="classics" data-index="3" onclick="openLightbox(3)">
+      <img src="https://images.unsplash.com/photo-1695958611032-c73ee2a875e5?w=800&q=85" alt="Daiquiri" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-daiquiri">Daiquiri</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="classics" data-index="4" onclick="openLightbox(4)">
+      <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=85" alt="Whiskey Sour" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-whiskey-sour">Whiskey Sour</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="classics" data-index="5" onclick="openLightbox(5)">
+      <img src="https://images.unsplash.com/photo-1622598595668-959d0802ad1f?w=800&q=85" alt="Moscow Mule" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-moscow-mule">Moscow Mule</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="classics" data-index="6" onclick="openLightbox(6)">
+      <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&q=85" alt="Mojito" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-mojito">Mojito</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="classics" data-index="7" onclick="openLightbox(7)">
+      <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=85" alt="Margarita" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-margarita">Margarita</span>
+        <span class="caption-cat"  data-i18n="filter-classics">Classics</span>
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="gallery-item" data-cat="signature" data-index="8" onclick="openLightbox(8)">
+      <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=85" alt="Velvet Noir" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-velvet-noir">Velvet Noir</span>
+        <span class="caption-cat"  data-i18n="filter-signature">Signature</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="signature" data-index="9" onclick="openLightbox(9)">
+      <img src="https://images.unsplash.com/photo-1587223962930-cb7f31384c19?w=800&q=85" alt="Golden Hour" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-golden-hour">Golden Hour</span>
+        <span class="caption-cat"  data-i18n="filter-signature">Signature</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="signature" data-index="10" onclick="openLightbox(10)">
+      <img src="https://images.unsplash.com/photo-1582106245687-cbb466a9f07f?w=800&q=85" alt="Midnight Bloom" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-midnight-bloom">Midnight Bloom</span>
+        <span class="caption-cat"  data-i18n="filter-signature">Signature</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="signature" data-index="11" onclick="openLightbox(11)">
+      <img src="https://images.unsplash.com/photo-1508253730651-e5ace80a7025?w=800&q=85" alt="Smoke and Mirror" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-smoke-mirror">Smoke &amp; Mirror</span>
+        <span class="caption-cat"  data-i18n="filter-signature">Signature</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="signature" data-index="12" onclick="openLightbox(12)">
+      <img src="https://images.unsplash.com/photo-1539170083769-b4f8c84ba5e5?w=800&q=85" alt="Ruby Reverie" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-ruby-reverie">Ruby Reverie</span>
+        <span class="caption-cat"  data-i18n="filter-signature">Signature</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="signature" data-index="13" onclick="openLightbox(13)">
+      <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=85" alt="Northern Lights" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-northern-lights">Northern Lights</span>
+        <span class="caption-cat"  data-i18n="filter-signature">Signature</span>
+      </div>
+    </div>
+
+    <!-- MOCKTAILS -->
+    <div class="gallery-item" data-cat="mocktails" data-index="14" onclick="openLightbox(14)">
+      <img src="https://images.unsplash.com/photo-1543253687-c931c8e01820?w=800&q=85" alt="Garden Bloom" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-garden-bloom">Garden Bloom</span>
+        <span class="caption-cat"  data-i18n="filter-mocktails">Mocktails</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="mocktails" data-index="15" onclick="openLightbox(15)">
+      <img src="https://images.unsplash.com/photo-1546171753-97d7676e4602?w=800&q=85" alt="Sunset Splash" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-sunset-splash">Sunset Splash</span>
+        <span class="caption-cat"  data-i18n="filter-mocktails">Mocktails</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="mocktails" data-index="16" onclick="openLightbox(16)">
+      <img src="https://images.unsplash.com/photo-1564419320408-38bbbd71e8e2?w=800&q=85" alt="Berry Bliss" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-berry-bliss">Berry Bliss</span>
+        <span class="caption-cat"  data-i18n="filter-mocktails">Mocktails</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="mocktails" data-index="17" onclick="openLightbox(17)">
+      <img src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=800&q=85" alt="Spiced Lemonade" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-spiced-lemonade">Spiced Lemonade</span>
+        <span class="caption-cat"  data-i18n="filter-mocktails">Mocktails</span>
+      </div>
+    </div>
+
+    <!-- SHOTS -->
+    <div class="gallery-item" data-cat="shots" data-index="18" onclick="openLightbox(18)">
+      <img src="https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=800&q=85" alt="B-52" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-b52">B-52</span>
+        <span class="caption-cat"  data-i18n="filter-shots">Shots</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="shots" data-index="19" onclick="openLightbox(19)">
+      <img src="https://images.unsplash.com/photo-1615887023563-94d2daea71ac?w=800&q=85" alt="Tequila Sunrise Shot" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-tequila-shot">Tequila Sunrise Shot</span>
+        <span class="caption-cat"  data-i18n="filter-shots">Shots</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="shots" data-index="20" onclick="openLightbox(20)">
+      <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=85" alt="Kamikaze" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-kamikaze">Kamikaze</span>
+        <span class="caption-cat"  data-i18n="filter-shots">Shots</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="shots" data-index="21" onclick="openLightbox(21)">
+      <img src="https://images.unsplash.com/photo-1560963805-6c64417cf65a?w=800&q=85" alt="Body Blow" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-body-blow">Body Blow</span>
+        <span class="caption-cat"  data-i18n="filter-shots">Shots</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="shots" data-index="22" onclick="openLightbox(22)">
+      <img src="https://images.unsplash.com/photo-1566662285-77f56def34c9?w=800&q=85" alt="Jäger Bomb" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-jager-bomb">Jäger Bomb</span>
+        <span class="caption-cat"  data-i18n="filter-shots">Shots</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-cat="shots" data-index="23" onclick="openLightbox(23)">
+      <img src="https://images.unsplash.com/photo-1594498257765-cbf4f3f447bb?w=800&q=85" alt="Lemon Drop" loading="lazy" />
+      <div class="caption">
+        <span class="caption-name" data-i18n="drink-lemon-drop">Lemon Drop</span>
+        <span class="caption-cat"  data-i18n="filter-shots">Shots</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <div class="lb-inner">
+      <button class="lb-close" onclick="closeLightbox()">✕</button>
+      <button class="lb-nav lb-prev" onclick="lbNav(-1)">&#8592;</button>
+      <button class="lb-nav lb-next" onclick="lbNav(+1)">&#8594;</button>
+      <img class="lb-img" id="lb-img" src="" alt="" />
+      <div class="lb-info">
+        <div class="lb-name" id="lb-name"></div>
+        <div class="lb-cat"  id="lb-cat"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span data-i18n="footer-copy">© 2024 The Velvet Glass. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // ── Data ─────────────────────────────────────────────────────
+    const drinks = [
+      { key:'drink-old-fashioned',   cat:'filter-classics',  src:'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=85' },
+      { key:'drink-negroni',         cat:'filter-classics',  src:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=800&q=85' },
+      { key:'drink-martini',         cat:'filter-classics',  src:'https://images.unsplash.com/photo-1607622750671-6cd9a99eabd1?w=800&q=85' },
+      { key:'drink-daiquiri',        cat:'filter-classics',  src:'https://images.unsplash.com/photo-1695958611032-c73ee2a875e5?w=800&q=85' },
+      { key:'drink-whiskey-sour',    cat:'filter-classics',  src:'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=85' },
+      { key:'drink-moscow-mule',     cat:'filter-classics',  src:'https://images.unsplash.com/photo-1622598595668-959d0802ad1f?w=800&q=85' },
+      { key:'drink-mojito',          cat:'filter-classics',  src:'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&q=85' },
+      { key:'drink-margarita',       cat:'filter-classics',  src:'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=85' },
+      { key:'drink-velvet-noir',     cat:'filter-signature', src:'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=85' },
+      { key:'drink-golden-hour',     cat:'filter-signature', src:'https://images.unsplash.com/photo-1587223962930-cb7f31384c19?w=800&q=85' },
+      { key:'drink-midnight-bloom',  cat:'filter-signature', src:'https://images.unsplash.com/photo-1582106245687-cbb466a9f07f?w=800&q=85' },
+      { key:'drink-smoke-mirror',    cat:'filter-signature', src:'https://images.unsplash.com/photo-1508253730651-e5ace80a7025?w=800&q=85' },
+      { key:'drink-ruby-reverie',    cat:'filter-signature', src:'https://images.unsplash.com/photo-1539170083769-b4f8c84ba5e5?w=800&q=85' },
+      { key:'drink-northern-lights', cat:'filter-signature', src:'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=85' },
+      { key:'drink-garden-bloom',    cat:'filter-mocktails', src:'https://images.unsplash.com/photo-1543253687-c931c8e01820?w=800&q=85' },
+      { key:'drink-sunset-splash',   cat:'filter-mocktails', src:'https://images.unsplash.com/photo-1546171753-97d7676e4602?w=800&q=85' },
+      { key:'drink-berry-bliss',     cat:'filter-mocktails', src:'https://images.unsplash.com/photo-1564419320408-38bbbd71e8e2?w=800&q=85' },
+      { key:'drink-spiced-lemonade', cat:'filter-mocktails', src:'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=800&q=85' },
+      { key:'drink-b52',             cat:'filter-shots',     src:'https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=800&q=85' },
+      { key:'drink-tequila-shot',    cat:'filter-shots',     src:'https://images.unsplash.com/photo-1615887023563-94d2daea71ac?w=800&q=85' },
+      { key:'drink-kamikaze',        cat:'filter-shots',     src:'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=85' },
+      { key:'drink-body-blow',       cat:'filter-shots',     src:'https://images.unsplash.com/photo-1560963805-6c64417cf65a?w=800&q=85' },
+      { key:'drink-jager-bomb',      cat:'filter-shots',     src:'https://images.unsplash.com/photo-1566662285-77f56def34c9?w=800&q=85' },
+      { key:'drink-lemon-drop',      cat:'filter-shots',     src:'https://images.unsplash.com/photo-1594498257765-cbf4f3f447bb?w=800&q=85' },
+    ];
+
+    // ── Translations ──────────────────────────────────────────────
+    const translations = {
+      en: {
+        'nav-classics':'Classics','nav-signature':'Signature','nav-mocktails':'Mocktails','nav-shots':'Shots','nav-gallery':'Gallery',
+        'gallery-tag':'Visual Menu','gallery-title-em':'Every Pour','gallery-title-rest':'A Masterpiece',
+        'gallery-subtitle':'Browse the full collection of our hand-crafted drinks — click any photo to explore.',
+        'filter-all':'All','filter-classics':'Classics','filter-signature':'Signature','filter-mocktails':'Mocktails','filter-shots':'Shots',
+        'footer-copy':'© 2024 The Velvet Glass. All rights reserved.',
+        'drink-old-fashioned':'Old Fashioned','drink-negroni':'Negroni','drink-martini':'Dry Martini','drink-daiquiri':'Daiquiri',
+        'drink-whiskey-sour':'Whiskey Sour','drink-moscow-mule':'Moscow Mule','drink-mojito':'Mojito','drink-margarita':'Margarita',
+        'drink-velvet-noir':'Velvet Noir','drink-golden-hour':'Golden Hour','drink-midnight-bloom':'Midnight Bloom',
+        'drink-smoke-mirror':'Smoke & Mirror','drink-ruby-reverie':'Ruby Reverie','drink-northern-lights':'Northern Lights',
+        'drink-garden-bloom':'Garden Bloom','drink-sunset-splash':'Sunset Splash','drink-berry-bliss':'Berry Bliss',
+        'drink-spiced-lemonade':'Spiced Lemonade','drink-b52':'B-52','drink-tequila-shot':'Tequila Sunrise Shot',
+        'drink-kamikaze':'Kamikaze','drink-body-blow':'Body Blow','drink-jager-bomb':'Jäger Bomb','drink-lemon-drop':'Lemon Drop',
+      },
+      hy: {
+        'nav-classics':'Դասականներ','nav-signature':'Հեղինակային','nav-mocktails':'Մոկտեյլեր','nav-shots':'Շոթեր','nav-gallery':'Պատկերասրահ',
+        'gallery-tag':'Տեսողական Մենյու','gallery-title-em':'Յուրաքանչյուր Լցում','gallery-title-rest':'Գլուխ­գործոց',
+        'gallery-subtitle':'Ծանոթացեք մեր ձեռագործ խմիչքների ամբողջ հավաքածուին — սեղմեք ցանկացած լուսանկարի վրա՝ ուսումնասիրելու համար։',
+        'filter-all':'Բոլոր','filter-classics':'Դասականներ','filter-signature':'Հեղինակային','filter-mocktails':'Մոկտեյլեր','filter-shots':'Շոթեր',
+        'footer-copy':'© 2024 The Velvet Glass. Բոլոր իրավունքները պաշտպանված են։',
+        'drink-old-fashioned':'Օlд Ֆաշընд','drink-negroni':'Նեգրոնի','drink-martini':'Չոր Մarтini','drink-daiquiri':'Դայquiri',
+        'drink-whiskey-sour':'Viski Saur','drink-moscow-mule':'Մoscow Mul','drink-mojito':'Мохито','drink-margarita':'Марgarита',
+        'drink-velvet-noir':'Թavish Nuar','drink-golden-hour':'Vosk Зham','drink-midnight-bloom':'Кesagisheri Tsaghik',
+        'drink-smoke-mirror':'Tsukh yev Hayeli','drink-ruby-reverie':'Rubine Yeraz','drink-northern-lights':'Hyusissayin Luysner',
+        'drink-garden-bloom':'Aygу Tsaghkum','drink-sunset-splash':'Мayramuti Shagh','drink-berry-bliss':'Hadaptghayin Yerjanik',
+        'drink-spiced-lemonade':'Buravет Limonad','drink-b52':'Б-52','drink-tequila-shot':'Tequila Arshaluys Shot',
+        'drink-kamikaze':'Kamikaze','drink-body-blow':'Marmni Hаrвats','drink-jager-bomb':'Jager Bomb','drink-lemon-drop':'Kitronаyin Kaghik',
+      },
+      ru: {
+        'nav-classics':'Классика','nav-signature':'Фирменные','nav-mocktails':'Мокктейли','nav-shots':'Шоты','nav-gallery':'Галерея',
+        'gallery-tag':'Визуальное Меню','gallery-title-em':'Каждый Бокал','gallery-title-rest':'Шедевр',
+        'gallery-subtitle':'Просмотрите полную коллекцию наших авторских напитков — нажмите на любое фото, чтобы изучить.',
+        'filter-all':'Все','filter-classics':'Классика','filter-signature':'Фирменные','filter-mocktails':'Мокктейли','filter-shots':'Шоты',
+        'footer-copy':'© 2024 The Velvet Glass. Все права защищены.',
+        'drink-old-fashioned':'Олд Фэшн','drink-negroni':'Негрони','drink-martini':'Сухой Мартини','drink-daiquiri':'Дайкири',
+        'drink-whiskey-sour':'Виски Сауэр','drink-moscow-mule':'Московский Мул','drink-mojito':'Мохито','drink-margarita':'Маргарита',
+        'drink-velvet-noir':'Вельвет Нуар','drink-golden-hour':'Золотой Час','drink-midnight-bloom':'Полночный Цветок',
+        'drink-smoke-mirror':'Дым и Зеркало','drink-ruby-reverie':'Рубиновая Мечта','drink-northern-lights':'Северное Сияние',
+        'drink-garden-bloom':'Садовый Цветок','drink-sunset-splash':'Закатный Всплеск','drink-berry-bliss':'Ягодное Блаженство',
+        'drink-spiced-lemonade':'Пряный Лимонад','drink-b52':'Б-52','drink-tequila-shot':'Текила Санрайз Шот',
+        'drink-kamikaze':'Камикадзе','drink-body-blow':'Телесный Удар','drink-jager-bomb':'Егерьская Бомба','drink-lemon-drop':'Лимонная Капля',
+      },
+    };
+
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const d = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (d[k] !== undefined) el.textContent = d[k];
+      });
+      document.querySelectorAll('[data-i18n-filter]').forEach(el => {
+        const k = el.getAttribute('data-i18n-filter');
+        if (d[k] !== undefined) el.textContent = d[k];
+      });
+      document.documentElement.lang = { en:'en', hy:'hy', ru:'ru' }[lang] || 'en';
+      ['en','hy','ru'].forEach(l => document.getElementById('btn-'+l).classList.toggle('active', l === lang));
+      // refresh lightbox labels if open
+      if (currentLbIndex >= 0 && document.getElementById('lightbox').classList.contains('open')) {
+        updateLightboxLabels(currentLbIndex);
+      }
+    }
+
+    // ── Filter ────────────────────────────────────────────────────
+    function filterGallery(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) item.classList.remove('hidden');
+        else item.classList.add('hidden');
+      });
+    }
+
+    // ── Lightbox ──────────────────────────────────────────────────
+    let currentLbIndex = -1;
+    let visibleIndices = [];
+
+    function buildVisible() {
+      visibleIndices = [...document.querySelectorAll('.gallery-item:not(.hidden)')]
+        .map(el => parseInt(el.dataset.index));
+    }
+
+    function openLightbox(idx) {
+      buildVisible();
+      currentLbIndex = visibleIndices.indexOf(idx);
+      renderLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightboxLabels(pos) {
+      const d = drinks[visibleIndices[pos]];
+      const dict = translations[currentLang];
+      document.getElementById('lb-name').textContent = dict[d.key]  || d.key;
+      document.getElementById('lb-cat' ).textContent = dict[d.cat]  || d.cat;
+    }
+
+    function renderLightbox() {
+      const d = drinks[visibleIndices[currentLbIndex]];
+      document.getElementById('lb-img').src = d.src;
+      document.getElementById('lb-img').alt = d.key;
+      updateLightboxLabels(currentLbIndex);
+    }
+
+    function lbNav(dir) {
+      currentLbIndex = (currentLbIndex + dir + visibleIndices.length) % visibleIndices.length;
+      renderLightbox();
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+      currentLbIndex = -1;
+    }
+
+    function closeLightboxOnBg(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    // Keyboard nav
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'ArrowRight') lbNav(+1);
+      if (e.key === 'ArrowLeft')  lbNav(-1);
+      if (e.key === 'Escape')     closeLightbox();
+    });
+
+    // ── Scroll-reveal ─────────────────────────────────────────────
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06 });
+
+    document.querySelectorAll('.gallery-item').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = `opacity 0.45s ease ${i * 40}ms, transform 0.45s ease ${i * 40}ms`;
+      obs.observe(el);
+    });
+  </script>
+</body>
+</html>

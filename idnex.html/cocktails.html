@@ -1,0 +1,794 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explore our curated cocktail menu featuring classic and signature drinks, crafted with premium spirits and fresh ingredients." />
+  <title>The Velvet Glass — Cocktail Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="cocktails.css" />
+  <style>
+    /* ── Language Switcher Button ── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50px;
+      padding: 3px;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: border-color 0.3s;
+      flex-shrink: 0;
+    }
+    .lang-switcher:hover {
+      border-color: rgba(255,255,255,0.4);
+    }
+    .lang-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 5px 13px;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .lang-btn.active {
+      background: linear-gradient(135deg, #d4af37, #f0c040);
+      color: #1a1a1a;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.45);
+    }
+    .lang-btn:not(.active):hover {
+      color: rgba(255,255,255,0.9);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <header class="hero" id="hero">
+    <div class="hero-backdrop"></div>
+    <nav class="navbar">
+      <span class="nav-logo">The Velvet Glass</span>
+      <ul class="nav-links">
+        <li><a href="#classics" data-i18n="nav-classics">Classics</a></li>
+        <li><a href="#signature" data-i18n="nav-signature">Signature</a></li>
+        <li><a href="#mocktails" data-i18n="nav-mocktails">Mocktails</a></li>
+        <li><a href="#shots" data-i18n="nav-shots">Shots</a></li>
+      </ul>
+      <!-- Language Switcher -->
+      <div class="lang-switcher" id="lang-switcher" role="group" aria-label="Language switcher">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn"        id="btn-hy" onclick="setLang('hy')">ՀՅ</button>
+        <button class="lang-btn"        id="btn-ru" onclick="setLang('ru')">RU</button>
+      </div>
+    </nav>
+    <div class="hero-content">
+      <p class="hero-tag" data-i18n="hero-tag">Est. 2024 · Handcrafted Cocktails</p>
+      <h1 class="hero-title">Sip the <em data-i18n="hero-title-em">Extraordinary</em></h1>
+      <p class="hero-subtitle" data-i18n="hero-subtitle">Every glass tells a story. Discover our curated selection of timeless classics and bold house signatures.</p>
+      <a href="#classics" class="hero-cta" id="hero-cta-btn" data-i18n="hero-cta">Browse the Menu</a>
+    </div>
+    <div class="scroll-indicator"><span></span></div>
+  </header>
+
+  <main>
+
+    <!-- ====== CLASSICS ====== -->
+    <section class="menu-section" id="classics">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="classics-tag">Time-Honoured</span>
+          <h2 class="section-title" data-i18n="classics-title">Classic Cocktails</h2>
+          <p class="section-desc" data-i18n="classics-desc">Rooted in tradition, perfected over decades.</p>
+        </div>
+        <div class="menu-grid">
+
+          <article class="menu-card" id="card-old-fashioned">
+            <div class="card-img-wrap">
+              <img class="card-img" src="photos/b3.jpg" alt="Old Fashioned cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$14</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-amber"></div>
+              <h3 class="drink-name" data-i18n="drink-old-fashioned">Old Fashioned</h3>
+              <p class="drink-desc" data-i18n="desc-old-fashioned">Bourbon, Angostura bitters, demerara sugar, orange zest</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-bourbon">Bourbon</span>
+                <span class="tag tag-strength" data-i18n="tag-strong">Strong</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-negroni">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&q=80" alt="Negroni cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$13</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-red"></div>
+              <h3 class="drink-name" data-i18n="drink-negroni">Negroni</h3>
+              <p class="drink-desc" data-i18n="desc-negroni">Gin, Campari, sweet vermouth, orange peel</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-gin">Gin</span>
+                <span class="tag tag-bitter" data-i18n="tag-bitter">Bitter</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-martini">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1607622750671-6cd9a99eabd1?w=600&q=80" alt="Dry Martini cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$15</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-silver"></div>
+              <h3 class="drink-name" data-i18n="drink-martini">Dry Martini</h3>
+              <p class="drink-desc" data-i18n="desc-martini">London dry gin, dry vermouth, lemon twist or olive</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-gin">Gin</span>
+                <span class="tag tag-dry" data-i18n="tag-dry">Dry</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-daiquiri">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1695958611032-c73ee2a875e5?w=600&q=80" alt="Daiquiri cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$12</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-lime"></div>
+              <h3 class="drink-name" data-i18n="drink-daiquiri">Daiquiri</h3>
+              <p class="drink-desc" data-i18n="desc-daiquiri">White rum, fresh lime juice, simple syrup</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-rum">Rum</span>
+                <span class="tag tag-sour" data-i18n="tag-sour">Sour</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-whiskey-sour">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&q=80" alt="Whiskey Sour cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$13</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-amber"></div>
+              <h3 class="drink-name" data-i18n="drink-whiskey-sour">Whiskey Sour</h3>
+              <p class="drink-desc" data-i18n="desc-whiskey-sour">Bourbon, lemon juice, simple syrup, egg white foam</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-bourbon">Bourbon</span>
+                <span class="tag tag-sour" data-i18n="tag-sour">Sour</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-moscow-mule">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1622598595668-959d0802ad1f?w=600&q=80" alt="Moscow Mule cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$12</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-gold"></div>
+              <h3 class="drink-name" data-i18n="drink-moscow-mule">Moscow Mule</h3>
+              <p class="drink-desc" data-i18n="desc-moscow-mule">Vodka, ginger beer, fresh lime juice, mint garnish</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-vodka">Vodka</span>
+                <span class="tag tag-refreshing" data-i18n="tag-refreshing">Refreshing</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-mojito">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80" alt="Mojito cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$12</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-mint"></div>
+              <h3 class="drink-name" data-i18n="drink-mojito">Mojito</h3>
+              <p class="drink-desc" data-i18n="desc-mojito">White rum, fresh mint, lime juice, sugar, soda water</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-rum">Rum</span>
+                <span class="tag tag-refreshing" data-i18n="tag-refreshing">Refreshing</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-margarita">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80" alt="Cute cat" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$13</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-lime"></div>
+              <h3 class="drink-name" data-i18n="drink-margarita">Margarita</h3>
+              <p class="drink-desc" data-i18n="desc-margarita">Tequila, triple sec, fresh lime juice, salt rim</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-tequila">Tequila</span>
+                <span class="tag tag-sour" data-i18n="tag-sour">Sour</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SIGNATURE ====== -->
+    <section class="menu-section section-dark" id="signature">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="signature-tag">House Originals</span>
+          <h2 class="section-title" data-i18n="signature-title">Signature Cocktails</h2>
+          <p class="section-desc" data-i18n="signature-desc">Born in our bar. Nowhere else to be found.</p>
+        </div>
+        <div class="menu-grid">
+
+          <article class="menu-card card-featured" id="card-velvet-noir">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80" alt="Velvet Noir signature cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge badge-featured">$18</span>
+              <span class="featured-ribbon" data-i18n="house-special">House Special</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-purple"></div>
+              <h3 class="drink-name" data-i18n="drink-velvet-noir">Velvet Noir</h3>
+              <p class="drink-desc" data-i18n="desc-velvet-noir">Aged rum, blackberry liqueur, activated charcoal syrup, lime, egg white</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-rum">Rum</span>
+                <span class="tag tag-house" data-i18n="house-special">House Special</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card card-featured" id="card-golden-hour">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1587223962930-cb7f31384c19?w=600&q=80" alt="Golden Hour signature cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge badge-featured">$17</span>
+              <span class="featured-ribbon" data-i18n="house-special">House Special</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-gold"></div>
+              <h3 class="drink-name" data-i18n="drink-golden-hour">Golden Hour</h3>
+              <p class="drink-desc" data-i18n="desc-golden-hour">Tequila reposado, mango purée, turmeric honey, lemon, chili salt rim</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-tequila">Tequila</span>
+                <span class="tag tag-house" data-i18n="house-special">House Special</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card card-featured" id="card-midnight-bloom">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1582106245687-cbb466a9f07f?w=600&q=80" alt="Midnight Bloom signature cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge badge-featured">$18</span>
+              <span class="featured-ribbon" data-i18n="house-special">House Special</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-purple"></div>
+              <h3 class="drink-name" data-i18n="drink-midnight-bloom">Midnight Bloom</h3>
+              <p class="drink-desc" data-i18n="desc-midnight-bloom">Gin, elderflower liqueur, lavender syrup, butterfly-pea tea, lemon</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-gin">Gin</span>
+                <span class="tag tag-house" data-i18n="house-special">House Special</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card card-featured" id="card-smoke-mirror">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1508253730651-e5ace80a7025?w=600&q=80" alt="Smoke and Mirror signature cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge badge-featured">$19</span>
+              <span class="featured-ribbon" data-i18n="house-special">House Special</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-amber"></div>
+              <h3 class="drink-name" data-i18n="drink-smoke-mirror">Smoke &amp; Mirror</h3>
+              <p class="drink-desc" data-i18n="desc-smoke-mirror">Mezcal, smoked rosemary syrup, grapefruit, agave, black pepper tincture</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-mezcal">Mezcal</span>
+                <span class="tag tag-smoky" data-i18n="tag-smoky">Smoky</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card card-featured" id="card-ruby-reverie">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1539170083769-b4f8c84ba5e5?w=600&q=80" alt="Ruby Reverie signature cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge badge-featured">$16</span>
+              <span class="featured-ribbon" data-i18n="house-special">House Special</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-red"></div>
+              <h3 class="drink-name" data-i18n="drink-ruby-reverie">Ruby Reverie</h3>
+              <p class="drink-desc" data-i18n="desc-ruby-reverie">Vodka, raspberry shrub, hibiscus syrup, lemon, sparkling rosé</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-vodka">Vodka</span>
+                <span class="tag tag-refreshing" data-i18n="tag-refreshing">Refreshing</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card card-featured" id="card-northern-lights">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80" alt="Northern Lights signature cocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge badge-featured">$17</span>
+              <span class="featured-ribbon" data-i18n="house-special">House Special</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-mint"></div>
+              <h3 class="drink-name" data-i18n="drink-northern-lights">Northern Lights</h3>
+              <p class="drink-desc" data-i18n="desc-northern-lights">Aquavit, green chartreuse, cucumber, dill, tonic, celery bitters</p>
+              <div class="drink-tags">
+                <span class="tag tag-spirit" data-i18n="spirit-aquavit">Aquavit</span>
+                <span class="tag tag-house" data-i18n="house-special">House Special</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== MOCKTAILS ====== -->
+    <section class="menu-section" id="mocktails">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="mocktails-tag">Zero Proof</span>
+          <h2 class="section-title" data-i18n="mocktails-title">Mocktails</h2>
+          <p class="section-desc" data-i18n="mocktails-desc">All the craft, none of the spirits.</p>
+        </div>
+        <div class="menu-grid menu-grid--narrow">
+
+          <article class="menu-card" id="card-garden-bloom">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1543253687-c931c8e01820?w=600&q=80" alt="Garden Bloom mocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$9</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-mint"></div>
+              <h3 class="drink-name" data-i18n="drink-garden-bloom">Garden Bloom</h3>
+              <p class="drink-desc" data-i18n="desc-garden-bloom">Cucumber, mint, elderflower, lemon, sparkling water</p>
+              <div class="drink-tags">
+                <span class="tag tag-non-alc" data-i18n="tag-non-alc">Non-Alcoholic</span>
+                <span class="tag tag-refreshing" data-i18n="tag-refreshing">Refreshing</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-sunset-splash">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1546171753-97d7676e4602?w=600&q=80" alt="Sunset Splash mocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$9</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-gold"></div>
+              <h3 class="drink-name" data-i18n="drink-sunset-splash">Sunset Splash</h3>
+              <p class="drink-desc" data-i18n="desc-sunset-splash">Mango, passion fruit, orange juice, grenadine, coconut cream</p>
+              <div class="drink-tags">
+                <span class="tag tag-non-alc" data-i18n="tag-non-alc">Non-Alcoholic</span>
+                <span class="tag tag-sweet" data-i18n="tag-sweet">Sweet</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-berry-bliss">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1564419320408-38bbbd71e8e2?w=600&q=80" alt="Berry Bliss mocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$9</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-red"></div>
+              <h3 class="drink-name" data-i18n="drink-berry-bliss">Berry Bliss</h3>
+              <p class="drink-desc" data-i18n="desc-berry-bliss">Mixed berry shrub, raspberry soda, lime, fresh mint</p>
+              <div class="drink-tags">
+                <span class="tag tag-non-alc" data-i18n="tag-non-alc">Non-Alcoholic</span>
+                <span class="tag tag-sour" data-i18n="tag-sour">Sour</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card" id="card-spiced-lemonade">
+            <div class="card-img-wrap">
+              <img class="card-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=600&q=80" alt="Spiced Lemonade mocktail" loading="lazy" />
+              <div class="card-img-overlay"></div>
+              <span class="card-price-badge">$8</span>
+            </div>
+            <div class="card-body">
+              <div class="card-accent accent-amber"></div>
+              <h3 class="drink-name" data-i18n="drink-spiced-lemonade">Spiced Lemonade</h3>
+              <p class="drink-desc" data-i18n="desc-spiced-lemonade">Fresh lemonade, ginger, cardamom syrup, rosemary, tonic</p>
+              <div class="drink-tags">
+                <span class="tag tag-non-alc" data-i18n="tag-non-alc">Non-Alcoholic</span>
+                <span class="tag tag-spicy" data-i18n="tag-spiced">Spiced</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SHOTS ====== -->
+    <section class="menu-section section-dark" id="shots">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="shots-tag">Quick &amp; Bold</span>
+          <h2 class="section-title" data-i18n="shots-title">Shots</h2>
+          <p class="section-desc" data-i18n="shots-desc">Small in size, big in spirit.</p>
+        </div>
+        <div class="shots-grid">
+
+          <article class="shot-card" id="shot-b52">
+            <div class="shot-img-wrap">
+              <img class="shot-img" src="https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=500&q=80" alt="B-52 shot" loading="lazy" />
+              <div class="shot-img-overlay"></div>
+            </div>
+            <div class="shot-inner">
+              <h3 class="drink-name" data-i18n="drink-b52">B-52</h3>
+              <p class="drink-desc" data-i18n="desc-b52">Kahlúa, Baileys, Grand Marnier</p>
+              <span class="drink-price">$8</span>
+            </div>
+          </article>
+
+          <article class="shot-card" id="shot-tequila">
+            <div class="shot-img-wrap">
+              <img class="shot-img" src="https://images.unsplash.com/photo-1615887023563-94d2daea71ac?w=500&q=80" alt="Tequila Sunrise Shot" loading="lazy" />
+              <div class="shot-img-overlay"></div>
+            </div>
+            <div class="shot-inner">
+              <h3 class="drink-name" data-i18n="drink-tequila-shot">Tequila Sunrise Shot</h3>
+              <p class="drink-desc" data-i18n="desc-tequila-shot">Tequila, grenadine, orange juice</p>
+              <span class="drink-price">$7</span>
+            </div>
+          </article>
+
+          <article class="shot-card" id="shot-kamikaze">
+            <div class="shot-img-wrap">
+              <img class="shot-img" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=500&q=80" alt="Kamikaze shot" loading="lazy" />
+              <div class="shot-img-overlay"></div>
+            </div>
+            <div class="shot-inner">
+              <h3 class="drink-name" data-i18n="drink-kamikaze">Kamikaze</h3>
+              <p class="drink-desc" data-i18n="desc-kamikaze">Vodka, triple sec, lime juice</p>
+              <span class="drink-price">$7</span>
+            </div>
+          </article>
+
+          <article class="shot-card" id="shot-blow">
+            <div class="shot-img-wrap">
+              <img class="shot-img" src="https://images.unsplash.com/photo-1560963805-6c64417cf65a?w=500&q=80" alt="Body Blow shot" loading="lazy" />
+              <div class="shot-img-overlay"></div>
+            </div>
+            <div class="shot-inner">
+              <h3 class="drink-name" data-i18n="drink-body-blow">Body Blow</h3>
+              <p class="drink-desc" data-i18n="desc-body-blow">Rum, coconut cream, pineapple</p>
+              <span class="drink-price">$8</span>
+            </div>
+          </article>
+
+          <article class="shot-card" id="shot-jager">
+            <div class="shot-img-wrap">
+              <img class="shot-img" src="https://images.unsplash.com/photo-1566662285-77f56def34c9?w=500&q=80" alt="Jager Bomb shot" loading="lazy" />
+              <div class="shot-img-overlay"></div>
+            </div>
+            <div class="shot-inner">
+              <h3 class="drink-name" data-i18n="drink-jager-bomb">Jäger Bomb</h3>
+              <p class="drink-desc" data-i18n="desc-jager-bomb">Jägermeister, energy drink</p>
+              <span class="drink-price">$9</span>
+            </div>
+          </article>
+
+          <article class="shot-card" id="shot-lemon-drop">
+            <div class="shot-img-wrap">
+              <img class="shot-img" src="https://images.unsplash.com/photo-1594498257765-cbf4f3f447bb?w=500&q=80" alt="Lemon Drop shot" loading="lazy" />
+              <div class="shot-img-overlay"></div>
+            </div>
+            <div class="shot-inner">
+              <h3 class="drink-name" data-i18n="drink-lemon-drop">Lemon Drop</h3>
+              <p class="drink-desc" data-i18n="desc-lemon-drop">Vodka, triple sec, lemon juice, sugar rim</p>
+              <span class="drink-price">$7</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <p class="footer-logo">The Velvet Glass</p>
+      <p class="footer-tagline" data-i18n="footer-tagline">Open every evening — Reservations welcome</p>
+      <p class="footer-note" data-i18n="footer-note">Please drink responsibly. Must be 21+ to order alcoholic beverages.</p>
+      <p class="footer-copy" data-i18n="footer-copy">&copy; 2024 The Velvet Glass. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Translations ──────────────────────────────────────────────
+    const translations = {
+
+      // ── ENGLISH ────────────────────────────────────────────────
+      en: {
+        'nav-classics':'Classics','nav-signature':'Signature','nav-mocktails':'Mocktails',
+        'nav-shots':'Shots',
+        'hero-tag':'Est. 2024 · Handcrafted Cocktails','hero-title-em':'Extraordinary',
+        'hero-subtitle':'Every glass tells a story. Discover our curated selection of timeless classics and bold house signatures.',
+        'hero-cta':'Browse the Menu',
+        'classics-tag':'Time-Honoured','classics-title':'Classic Cocktails',
+        'classics-desc':'Rooted in tradition, perfected over decades.',
+        'signature-tag':'House Originals','signature-title':'Signature Cocktails',
+        'signature-desc':'Born in our bar. Nowhere else to be found.','house-special':'House Special',
+        'mocktails-tag':'Zero Proof','mocktails-title':'Mocktails',
+        'mocktails-desc':'All the craft, none of the spirits.',
+        'shots-tag':'Quick & Bold','shots-title':'Shots','shots-desc':'Small in size, big in spirit.',
+        'footer-tagline':'Open every evening — Reservations welcome',
+        'footer-note':'Please drink responsibly. Must be 21+ to order alcoholic beverages.',
+        'footer-copy':'© 2024 The Velvet Glass. All rights reserved.',
+        'drink-old-fashioned':'Old Fashioned','drink-negroni':'Negroni','drink-martini':'Dry Martini',
+        'drink-daiquiri':'Daiquiri','drink-whiskey-sour':'Whiskey Sour','drink-moscow-mule':'Moscow Mule',
+        'drink-mojito':'Mojito','drink-margarita':'Margarita','drink-velvet-noir':'Velvet Noir',
+        'drink-golden-hour':'Golden Hour','drink-midnight-bloom':'Midnight Bloom',
+        'drink-smoke-mirror':'Smoke & Mirror','drink-ruby-reverie':'Ruby Reverie',
+        'drink-northern-lights':'Northern Lights','drink-garden-bloom':'Garden Bloom',
+        'drink-sunset-splash':'Sunset Splash','drink-berry-bliss':'Berry Bliss',
+        'drink-spiced-lemonade':'Spiced Lemonade','drink-b52':'B-52',
+        'drink-tequila-shot':'Tequila Sunrise Shot','drink-kamikaze':'Kamikaze',
+        'drink-body-blow':'Body Blow','drink-jager-bomb':'Jäger Bomb','drink-lemon-drop':'Lemon Drop',
+        'desc-old-fashioned':'Bourbon, Angostura bitters, demerara sugar, orange zest',
+        'desc-negroni':'Gin, Campari, sweet vermouth, orange peel',
+        'desc-martini':'London dry gin, dry vermouth, lemon twist or olive',
+        'desc-daiquiri':'White rum, fresh lime juice, simple syrup',
+        'desc-whiskey-sour':'Bourbon, lemon juice, simple syrup, egg white foam',
+        'desc-moscow-mule':'Vodka, ginger beer, fresh lime juice, mint garnish',
+        'desc-mojito':'White rum, fresh mint, lime juice, sugar, soda water',
+        'desc-margarita':'Tequila, triple sec, fresh lime juice, salt rim',
+        'desc-velvet-noir':'Aged rum, blackberry liqueur, activated charcoal syrup, lime, egg white',
+        'desc-golden-hour':'Tequila reposado, mango purée, turmeric honey, lemon, chili salt rim',
+        'desc-midnight-bloom':'Gin, elderflower liqueur, lavender syrup, butterfly-pea tea, lemon',
+        'desc-smoke-mirror':'Mezcal, smoked rosemary syrup, grapefruit, agave, black pepper tincture',
+        'desc-ruby-reverie':'Vodka, raspberry shrub, hibiscus syrup, lemon, sparkling rosé',
+        'desc-northern-lights':'Aquavit, green chartreuse, cucumber, dill, tonic, celery bitters',
+        'desc-garden-bloom':'Cucumber, mint, elderflower, lemon, sparkling water',
+        'desc-sunset-splash':'Mango, passion fruit, orange juice, grenadine, coconut cream',
+        'desc-berry-bliss':'Mixed berry shrub, raspberry soda, lime, fresh mint',
+        'desc-spiced-lemonade':'Fresh lemonade, ginger, cardamom syrup, rosemary, tonic',
+        'desc-b52':'Kahlúa, Baileys, Grand Marnier',
+        'desc-tequila-shot':'Tequila, grenadine, orange juice',
+        'desc-kamikaze':'Vodka, triple sec, lime juice',
+        'desc-body-blow':'Rum, coconut cream, pineapple',
+        'desc-jager-bomb':'Jägermeister, energy drink',
+        'desc-lemon-drop':'Vodka, triple sec, lemon juice, sugar rim',
+        'spirit-bourbon':'Bourbon','spirit-gin':'Gin','spirit-rum':'Rum','spirit-vodka':'Vodka',
+        'spirit-tequila':'Tequila','spirit-mezcal':'Mezcal','spirit-aquavit':'Aquavit',
+        'tag-strong':'Strong','tag-bitter':'Bitter','tag-dry':'Dry','tag-sour':'Sour',
+        'tag-refreshing':'Refreshing','tag-smoky':'Smoky','tag-sweet':'Sweet',
+        'tag-spiced':'Spiced','tag-non-alc':'Non-Alcoholic',
+      },
+
+      // ── RUSSIAN ────────────────────────────────────────────────
+      ru: {
+        'nav-classics':'Классика','nav-signature':'Фирменные','nav-mocktails':'Мокктейли',
+        'nav-shots':'Шоты',
+        'hero-tag':'Осн. 2024 · Авторские коктейли','hero-title-em':'Необыкновенное',
+        'hero-subtitle':'Каждый бокал рассказывает историю. Откройте для себя нашу коллекцию классических и авторских коктейлей.',
+        'hero-cta':'Смотреть меню',
+        'classics-tag':'Проверено временем','classics-title':'Классические коктейли',
+        'classics-desc':'Укоренённые в традиции, доведённые до совершенства.',
+        'signature-tag':'Авторские рецепты','signature-title':'Фирменные коктейли',
+        'signature-desc':'Рождены в нашем баре. Нигде больше не найти.','house-special':'Фирменный',
+        'mocktails-tag':'Без алкоголя','mocktails-title':'Мокктейли',
+        'mocktails-desc':'Всё мастерство — без капли алкоголя.',
+        'shots-tag':'Быстро и смело','shots-title':'Шоты','shots-desc':'Маленький объём, большой дух.',
+        'footer-tagline':'Открыты каждый вечер — приём бронирований',
+        'footer-note':'Пожалуйста, употребляйте алкоголь ответственно. Алкогольные напитки — только для лиц старше 21 года.',
+        'footer-copy':'© 2024 The Velvet Glass. Все права защищены.',
+        'drink-old-fashioned':'Олд Фэшн','drink-negroni':'Негрони','drink-martini':'Сухой Мартини',
+        'drink-daiquiri':'Дайкири','drink-whiskey-sour':'Виски Сауэр','drink-moscow-mule':'Московский Мул',
+        'drink-mojito':'Мохито','drink-margarita':'Маргарита','drink-velvet-noir':'Вельвет Нуар',
+        'drink-golden-hour':'Золотой Час','drink-midnight-bloom':'Полночный Цветок',
+        'drink-smoke-mirror':'Дым и Зеркало','drink-ruby-reverie':'Рубиновая Мечта',
+        'drink-northern-lights':'Северное Сияние','drink-garden-bloom':'Садовый Цветок',
+        'drink-sunset-splash':'Закатный Всплеск','drink-berry-bliss':'Ягодное Блаженство',
+        'drink-spiced-lemonade':'Пряный Лимонад','drink-b52':'Б-52',
+        'drink-tequila-shot':'Текила Санрайз Шот','drink-kamikaze':'Камикадзе',
+        'drink-body-blow':'Телесный Удар','drink-jager-bomb':'Егерьская Бомба','drink-lemon-drop':'Лимонная Капля',
+        'desc-old-fashioned':'Бурбон, биттер Ангостура, сахар демерара, цедра апельсина',
+        'desc-negroni':'Джин, Кампари, сладкий вермут, апельсиновая цедра',
+        'desc-martini':'Лондонский сухой джин, сухой вермут, лимонная цедра или оливка',
+        'desc-daiquiri':'Белый ром, свежий сок лайма, простой сироп',
+        'desc-whiskey-sour':'Бурбон, лимонный сок, простой сироп, пена из белка',
+        'desc-moscow-mule':'Водка, имбирный эль, свежий сок лайма, мята',
+        'desc-mojito':'Белый ром, свежая мята, сок лайма, сахар, содовая',
+        'desc-margarita':'Текила, трипл сек, свежий сок лайма, солёный ободок',
+        'desc-velvet-noir':'Выдержанный ром, ежевичный ликёр, сироп активированного угля, лайм, белок',
+        'desc-golden-hour':'Текила репосадо, пюре манго, мёд с куркумой, лимон, чили-соль',
+        'desc-midnight-bloom':'Джин, ликёр бузины, сироп лаванды, чай «Синий горошек», лимон',
+        'desc-smoke-mirror':'Мескаль, сироп копчёного розмарина, грейпфрут, агава, настойка чёрного перца',
+        'desc-ruby-reverie':'Водка, малиновый шраб, сироп гибискуса, лимон, игристое розе',
+        'desc-northern-lights':'Аквавит, зелёный шартрез, огурец, укроп, тоник, сельдерейный биттер',
+        'desc-garden-bloom':'Огурец, мята, ликёр бузины, лимон, газированная вода',
+        'desc-sunset-splash':'Манго, маракуйя, апельсиновый сок, гренадин, кокосовый крем',
+        'desc-berry-bliss':'Ягодный шраб, малиновая газировка, лайм, свежая мята',
+        'desc-spiced-lemonade':'Свежий лимонад, имбирь, сироп кардамона, розмарин, тоник',
+        'desc-b52':'Kahlúa, Baileys, Grand Marnier',
+        'desc-tequila-shot':'Текила, гренадин, апельсиновый сок',
+        'desc-kamikaze':'Водка, трипл сек, сок лайма',
+        'desc-body-blow':'Ром, кокосовый крем, ананас',
+        'desc-jager-bomb':'Егермейстер, энергетик',
+        'desc-lemon-drop':'Водка, трипл сек, лимонный сок, сахарный ободок',
+        'spirit-bourbon':'Бурбон','spirit-gin':'Джин','spirit-rum':'Ром','spirit-vodka':'Водка',
+        'spirit-tequila':'Текила','spirit-mezcal':'Мескаль','spirit-aquavit':'Аквавит',
+        'tag-strong':'Крепкий','tag-bitter':'Горький','tag-dry':'Сухой','tag-sour':'Кислый',
+        'tag-refreshing':'Освежающий','tag-smoky':'Дымный','tag-sweet':'Сладкий',
+        'tag-spiced':'Пряный','tag-non-alc':'Безалкогольный',
+      },
+
+      // ── ARMENIAN ────────────────────────────────────────────────
+      hy: {
+        // Nav
+        'nav-classics':    'դասականներ',
+        'nav-signature':   'Հեղինակային',
+        'nav-mocktails':   'Մոկտեյլներ',
+        'nav-shots':       'Շոթեր',
+        'nav-gallery':     'Պատկերասրահ',
+        // Hero
+        'hero-tag':        'Հիմն. 2024 · Ձեռագործ կոկտեյլներ',
+        'hero-title-em':   'Անհավատալի',
+        'hero-subtitle':   'Յուրաքանչյուր բաժակ պատմություն է պատմում։ Ծանոթացեք մեր ընտրված դասականների ու հեղինակային կոկտեյլների հավաքածուին։',
+        'hero-cta':        'Դիտել ցանկը',
+        // Classics section
+        'classics-tag':    'Ժամանակի Փորձված',
+        'classics-title':  'Դասական Կոկտեյլներ',
+        'classics-desc':   'Արմատավորված ավանդույթով, կատարելագործված տասնամյակներ շարունակ։',
+        // Signature section
+        'signature-tag':   'Բնորինակներ',
+        'signature-title': 'Հեղինակային Կոկտեյլներ',
+        'signature-desc':  'Ծնված մեր բարում։ Այլ տեղ չի կարելի գտնել։',
+        'house-special':   'Հեղինակային',
+        // Mocktails section
+        'mocktails-tag':   'Առանց Ալկոհոլի',
+        'mocktails-title': 'Մոկտեյլներ',
+        'mocktails-desc':  'Ողջ արհեստավարժությունը՝ առանց ոգելից խմիչքի։',
+        // Shots section
+        'shots-tag':       'Արագ ու Համարձակ',
+        'shots-title':     'Շոթեր',
+        'shots-desc':      'Փոքր ծավալ, մեծ ոգի։',
+        // Footer
+        'footer-tagline':  'Բաց ամեն երեկո — Ամրագրումները ողջունելի են',
+        'footer-note':     'Խնդրում ենք չարաշահել ալկոհոլը։ Ալկոհոլային խմիչքներ պատվիրելու համար պետք է լինեք 21+։',
+        'footer-copy':     '© 2024 The Velvet Glass. Բոլոր իրավունքները պաշտպանված են։',
+        // Drink names
+        'drink-old-fashioned':   'Օլդ Ֆաշընդ',
+        'drink-negroni':         'Նեգրոնի',
+        'drink-martini':         'Չոր Մարտինի',
+        'drink-daiquiri':        'Դայքիրի',
+        'drink-whiskey-sour':    'Վիսկի Սաուր',
+        'drink-moscow-mule':     'Մոսկովյան Ջորի',
+        'drink-mojito':          'Մոխիտո',
+        'drink-margarita':       'Մարգարիտա',
+        'drink-velvet-noir':     'Թավիշ Նուար',
+        'drink-golden-hour':     'Ոսկե Ժամ',
+        'drink-midnight-bloom':  'Կեսգիշերի Ծաղիկ',
+        'drink-smoke-mirror':    'Ծուխ և Հայելի',
+        'drink-ruby-reverie':    'Ռուբինե Երազ',
+        'drink-northern-lights': 'Հյուսիսային Լույսեր',
+        'drink-garden-bloom':    'Այգու Ծաղկում',
+        'drink-sunset-splash':   'Մայրամուտի Շաղ',
+        'drink-berry-bliss':     'Հատապտղային Երջանկություն',
+        'drink-spiced-lemonade': 'Բուրավետ Լիմոնադ',
+        'drink-b52':             'Բ-52',
+        'drink-tequila-shot':    'Տեկիլա Արշալույս Շոթ',
+        'drink-kamikaze':        'Կամիկաձե',
+        'drink-body-blow':       'Մարմնի Հարված',
+        'drink-jager-bomb':      'Յեգեր Բոմբ',
+        'drink-lemon-drop':      'Կիտրոնի Շիթ',
+        // Descriptions
+        'desc-old-fashioned':   'Բուրբոն, Անգոստուրա բիտերս, դեմերարայի շաքար, նարնջի կեղեւ',
+        'desc-negroni':         'Ջին, Կամպարի, քաղցր վերմութ, նարնջի կեղեւ',
+        'desc-martini':         'Լոնդոնյան չոր ջին, չոր վերմութ, կիտրոնի կեղևով կամ ձիթապտղով',
+        'desc-daiquiri':        'Սպիտակ ռոմ, թարմ կրաի հյութ, պարզ շաքարի շռոթ',
+        'desc-whiskey-sour':    'Բուրբոն, կիտրոնի հյութ, պարզ շաքարի շռոթ, ձվի սպիտակի փրփուր',
+        'desc-moscow-mule':     'Վոդկա, կոճապղպեղի գարեջուր, թարմ կրաի հյութ, անանուխ',
+        'desc-mojito':          'Սպիտակ ռոմ, թարմ անանուխ, կրաի հյութ, շաքար, սոդայի ջուր',
+        'desc-margarita':       'Տեկիլա, թրիփլ սեք, թարմ կրաի հյութ, աղի եզր',
+        'desc-velvet-noir':     'Հնեցված ռոմ, մոռու լիկյոր, ակտիվացված ածուխի շռոթ, կրա, ձվի սպիտակ',
+        'desc-golden-hour':     'Ռեպոսադո տեկիլա, մանգոյի պյուրե, թուրմերիկ մեղր, կիտրոն, չիլիի աղ',
+        'desc-midnight-bloom':  'Ջին, թխկու ծաղիկի լիկյոր, լավանդայի շռոթ, ծիծամ թեյ, կիտրոն',
+        'desc-smoke-mirror':    'Մեսկալ, ծխած խնկունու շռոթ, մոխրագույն, ագավ, սև պղպեղի թուրմ',
+        'desc-ruby-reverie':    'Վոդկա, ազնվամորու թրման, հիբիսկուսի շռոթ, կիտրոն, փրփրող ռոզե',
+        'desc-northern-lights': 'Ակվավիտ, կանաչ շArtruz, վարունգ, սամիթ, տոնիկ, նեխուրի բիտերս',
+        'desc-garden-bloom':    'Վարունգ, անանուխ, թխկու ծաղիկ, կիտրոն, փրփրող ջուր',
+        'desc-sunset-splash':   'Մանգո, կրֆրանայ, նարնջի հյութ, գրենադին, կոկոսի կրեմ',
+        'desc-berry-bliss':     'Հապալաս-ազնվամորու շռոթ, ազնվամորու գազ, կրա, թարմ անանուխ',
+        'desc-spiced-lemonade': 'Թարմ լիմոնադ, կոճապղպեղ, կարդամոնի շռոթ, խնկունի, տոնիկ',
+        'desc-b52':             'Կahluá, Baileys, Grand Marnier',
+        'desc-tequila-shot':    'Տեկիլա, գրենադին, նարնջի հյութ',
+        'desc-kamikaze':        'Վոդկա, թրիփլ սեք, կրաի հյութ',
+        'desc-body-blow':       'Ռոմ, կոկոսի կրեմ, արքայախնձոր',
+        'desc-jager-bomb':      'Յեգermäjster, էներջի ըն',
+        'desc-lemon-drop':      'Վոդկա, թրիփլ սեք, կիտրոնի հյութ, շաքարի եզր',
+        // Tags
+        'spirit-bourbon':  'Բուրբոն',
+        'spirit-gin':      'Ջին',
+        'spirit-rum':      'Ռոմ',
+        'spirit-vodka':    'Վոդկա',
+        'spirit-tequila':  'Տեկիլա',
+        'spirit-mezcal':   'Մեսկալ',
+        'spirit-aquavit':  'Ակվավիտ',
+        'tag-strong':      'Ուժեղ',
+        'tag-bitter':      'Դառը',
+        'tag-dry':         'Չոր',
+        'tag-sour':        'Թթու',
+        'tag-refreshing':  'Թարմացնող',
+        'tag-smoky':       'Ծխոտ',
+        'tag-sweet':       'Քաղցր',
+        'tag-spiced':      'Բուրավետ',
+        'tag-non-alc':     'Ոչ-ալկոհոլային',
+      },
+    };
+
+    // ── Apply language ────────────────────────────────────────────
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const dict = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) el.textContent = dict[key];
+      });
+      document.documentElement.lang = lang;
+      ['en', 'hy', 'ru'].forEach(l =>
+        document.getElementById('btn-' + l).classList.toggle('active', l === lang)
+      );
+    }
+
+    // ── Scroll-reveal for cards ───────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const siblings = [...el.parentElement.children];
+          const index = siblings.indexOf(el);
+          setTimeout(() => { el.classList.add('visible'); }, index * 80);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.menu-card, .shot-card').forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>
